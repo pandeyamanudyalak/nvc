@@ -81,10 +81,15 @@ class User(AbstractBaseUser):
 
 class TicketModel(models.Model):
     type = (
-        ('Installation','installation'),
-        ('Service','service'),
-        ('Spares','spares'),
-        ('Sales Enquiry','sales enquiry')
+        ('installation','Installation'),
+        ('service','Service'),
+        ('spares','Spares'),
+        ('sales snquiry','Sales Enquiry')
+    )
+
+    receving_status = (
+        ('Yes','yes'),
+        ('No','No')
     )
 
     query_type = models.CharField(choices=type,max_length=30)
@@ -93,13 +98,72 @@ class TicketModel(models.Model):
       max_length=255,
       
     )
-    ticket_name = models.CharField(max_length=200,null=True,blank=True)
-    ticket_address = models.CharField(max_length=200,null=True,blank=True)
+    ticket_creator_name = models.CharField(max_length=200,null=True,blank=True)
+    ticket_Creator_address = models.CharField(max_length=200,null=True,blank=True)
+
+    # Fields for query type installation
+
     equipment_name = models.CharField(max_length=200,null=True,blank=True)
     equipment_sr_no = models.CharField(max_length=200,null=True,blank=True)
     equipment_model_no = models.CharField(max_length=200,null=True,blank=True)
     problem_description = models.CharField(max_length=200,null=True,blank=True)
     production_temprorary_running = models.BooleanField(default=False)
     running_with_rejection = models.BooleanField(default=False)
-    running_with_rejection = models.BooleanField(default=False)
+    #running_with_rejection = models.BooleanField(default=False)
     production_breakdown = models.BooleanField(default=False)
+
+    # Fields for query type sales
+
+    sales_production_name = models.CharField(max_length=200,null=True,blank=True)
+    process_mc_type = models.CharField(max_length=200,null=True,blank=True)
+    max_kg_or_hrs = models.CharField(max_length=200,null=True,blank=True)
+    material_denticty =  models.CharField(max_length=200,null=True,blank=True)
+
+    # Production Status for sales enquiry
+
+    virgin = models.BooleanField(default=False)
+    regrind =  models.BooleanField(default=False)
+    falkes =  models.BooleanField(default=False)
+    master_batch =  models.BooleanField(default=False)
+    additives_1 =  models.BooleanField(default=False)
+    additives_2 =  models.BooleanField(default=False)
+
+    # Fields for query type installation
+    work_order_no = models.IntegerField(null=True,blank=True)
+    packing_slip_no = models.IntegerField(null=True,blank=True)
+    receive_in_good_condition = models.CharField(choices=receving_status,default='Yes',max_length=10)
+    equipment_description = models.CharField(max_length=400,null=True,blank=True)
+    production_trial_readliness_date = models.DateField(null=True,blank=True)
+
+    # Pre installation CheckList status
+    pending = models.BooleanField(default=False)
+    ready = models.BooleanField(default=False)
+    during_engg_visit = models.BooleanField(default=False)
+    not_understood_list = models.BooleanField(default=False)
+    further_tech_guidence_needed = models.BooleanField(default=False)
+
+    # Fields for query type spares
+    spare_name = models.CharField(max_length=200,null=True,blank=True)
+    spare_sr_no = models.CharField(max_length=200,null=True,blank=True)
+    spare_model_name = models.CharField(max_length=200,null=True,blank=True)
+    #Parts details
+    part_name = models.CharField(max_length=200,null=True,blank=True)
+    part_description = models.CharField(max_length=200,null=True,blank=True)
+    part_quantity = models.IntegerField(null=True,blank=True)
+
+    # Flag Values
+    closed_ticket = models.BooleanField(default=False)
+    on_call_ticket = models.BooleanField(default=False)
+    visit_and_closed = models.BooleanField(default=False)
+    visit_scheduled = models.BooleanField(default=False)
+    waiting_for_spares = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return str(self.ticket_creator_name)
+
+
+
+
+
+

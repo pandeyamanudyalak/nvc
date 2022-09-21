@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from nvc_app import serializers
-from nvc_app.serializers import SendPasswordResetEmailSerializer, UserLoginSerializer, UserRegistrationSerializer , UserPasswordResetSerializer , UserChangePasswordSerializer
+from nvc_app.serializers import SendPasswordResetEmailSerializer, TicketSerializer, UserLoginSerializer, UserRegistrationSerializer , UserPasswordResetSerializer , UserChangePasswordSerializer
 from django.contrib.auth import authenticate
 from .renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -72,3 +72,17 @@ class UserChangePasswordView(APIView):
     serializer = UserChangePasswordSerializer(data=request.data,context={"user":request.user})
     serializer.is_valid(raise_exception=True)
     return Response({'msg':'Your password changed successfully.'}, status=status.HTTP_200_OK)
+
+
+class CreateTicket(APIView):
+  renderer_classes = [UserRenderer]
+  def post(self,request,*args,**kwargs):
+    serializer = TicketSerializer(data=request.data)
+    
+    if serializer.is_valid():
+      print(serializer)
+      serializer.save()
+      return Response({'msg':'Ticket created successfully.'}, status=status.HTTP_201_CREATED)
+    return Response({'msg':'Something wents wrong.'}, status=status.HTTP_400_BAD_REQUEST)
+
+  
