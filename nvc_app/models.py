@@ -88,3 +88,18 @@ class TicketModel(models.Model):
     )
 
     query_type = models.CharField(choices=type,max_length=30)
+    ticket_email = models.EmailField(
+      verbose_name='ticket_email',
+      max_length=255,
+      
+    )
+    ticket_name = models.CharField(max_length=200,null=True,blank=True)
+    ticket_address = models.CharField(max_length=200,null=True,blank=True)
+    equipment_name = models.CharField(max_length=200,null=True,blank=True)
+    equipment_sr_no = models.CharField(max_length=200,null=True,blank=True)
+    equipment_model_no = models.CharField(max_length=200,null=True,blank=True)
+    problem_description = models.CharField(max_length=200,null=True,blank=True)
+    production_temprorary_running = models.BooleanField(default=False)
+    running_with_rejection = models.BooleanField(default=False)
+    running_with_rejection = models.BooleanField(default=False)
+    production_breakdown = models.BooleanField(default=False)
