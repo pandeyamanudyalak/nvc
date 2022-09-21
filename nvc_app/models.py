@@ -76,3 +76,15 @@ class User(AbstractBaseUser):
       "Is the user a member of staff?"
       # Simplest possible answer: All admins are staff
       return self.is_admin
+
+
+
+class TicketModel(models.Model):
+    type = (
+        ('Installation','installation'),
+        ('Service','service'),
+        ('Spares','spares'),
+        ('Sales Enquiry','sales enquiry')
+    )
+
+    query_type = models.CharField(choices=type,max_length=30)
