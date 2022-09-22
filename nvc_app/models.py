@@ -98,8 +98,8 @@ class TicketModel(models.Model):
       max_length=255,
       
     )
-    ticket_creator_name = models.CharField(max_length=200,null=True,blank=True)
-    ticket_Creator_address = models.CharField(max_length=200,null=True,blank=True)
+    ticket_creator_name = models.CharField(max_length=200)
+    ticket_creator_address = models.CharField(max_length=200)
 
     # Fields for query type installation
 

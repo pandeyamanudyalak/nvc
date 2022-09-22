@@ -85,4 +85,14 @@ class CreateTicket(APIView):
       return Response({'msg':'Ticket created successfully.'}, status=status.HTTP_201_CREATED)
     return Response({'msg':'Something wents wrong.'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+# class UserProfile(APIView):
+#   renderer_classes = [UserRenderer]
+#   permission_classes = [IsAuthenticated,]
+#   def get(self,request):
+#     user = request.user
+#     user_details = User.objects.get(email=user)
+#     serializer = UserRegistrationSerializer(user_details)
+#     print(serializer)
+    
   
