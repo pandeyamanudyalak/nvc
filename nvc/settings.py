@@ -29,10 +29,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['nvccrm.herokuapp.com','127.0.0.1']
 
-# FILE_UPLOAD_HANDLERS = [
-#     'django.core.files.uploadhandler.MemoryFileUploadHandler',
-#     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
-# ]
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 
 # Application definition
 

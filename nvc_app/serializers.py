@@ -1,4 +1,4 @@
-from curses import tigetflag
+from multiprocessing import context
 from urllib import request
 from xml.dom import ValidationErr
 from rest_framework import serializers
@@ -118,12 +118,17 @@ class TicketSerializer(serializers.ModelSerializer):
     model = TicketModel
     fields = '__all__'
 
-  # def validate(self, attrs):
-  #   file = self.context.get('file')
+  # def validate_attach_file(self, attrs):
+  #   file = list(self.context.get('file'))
+  #   file_list=[]
   #   for f in file:
-  #     TicketModel.objects.create(attach_file=f).save()
+  #     file_list.append(file_list)
 
   #   return attrs
+  
+    
+
+    
 
   
 

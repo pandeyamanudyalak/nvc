@@ -78,7 +78,7 @@ class CreateTicket(APIView):
   renderer_classes = [UserRenderer]
   def post(self,request,*args,**kwargs):
     file = request.FILES.getlist('attach_file')
-    print('==========File',file)
+   
     serializer = TicketSerializer(data=request.data,context={'file':file})
     
     if serializer.is_valid():
