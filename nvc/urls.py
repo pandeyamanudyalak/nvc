@@ -1,6 +1,8 @@
 from django.urls import path
 from django.contrib import admin
 from nvc_app import views
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/',admin.site.urls),
     path('register/', views.UserRegistrationView.as_view(), name='register'),
@@ -16,4 +18,4 @@ urlpatterns = [
     #path('user_profile/',views.UserProfile.as_view(),name='user-profile')
    
 
-]
+] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)

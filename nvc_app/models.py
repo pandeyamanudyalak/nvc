@@ -3,6 +3,7 @@ from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 
+
 #  Custom User Manager
 class UserManager(BaseUserManager):
   def create_user(self, email, user_name,user_city,user_zip_code,user_company_name, password=None, password2=None):
@@ -34,7 +35,9 @@ class UserManager(BaseUserManager):
           user_company_name = user_company_name
           
       )
+      user.is_active = True
       user.is_admin = True
+      user.is_staff = True
       user.save(using=self._db)
       return user
 
@@ -160,6 +163,24 @@ class TicketModel(models.Model):
     visit_and_closed = models.BooleanField(default=False)
     visit_scheduled = models.BooleanField(default=False)
     waiting_for_spares = models.BooleanField(default=False)
+
+    #Step 3 Status of ticket
+
+    ticket_status = (
+        ('telephonic resolution','Telephonic Resolution'),
+        ('require spare utilities','Require Spare Utilities'),
+        ('payment pending','Payment Pending'),
+        ('received by customer','Received By Customer'),
+        ('revisit','Revisit'),
+        ('resolved','Resolved')
+    )
+
+
+    status_of_ticket = models.CharField(choices=ticket_status,max_length=200)
+    priorty = models.IntegerField(null=True,blank=True)
+    attach_file = models.FileField(upload_to='attachments')
+
+
 
     #Group
    

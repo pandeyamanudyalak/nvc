@@ -21,14 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-fr47713oh8&m$jkrlwut&(iq5lxw$p!=vy+glck##b!%j-a=r^'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-fr47713oh8&m$jkrlwut&(iq5lxw$p!=vy+glck##b!%j-a=r^'
+#SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nvccrm.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['nvccrm.herokuapp.com','127.0.0.1']
 
+# FILE_UPLOAD_HANDLERS = [
+#     'django.core.files.uploadhandler.MemoryFileUploadHandler',
+#     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+# ]
 
 # Application definition
 
@@ -133,6 +137,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'static'
+MEDIA_ROOT = os.path.join(BASE_DIR,'attachments')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

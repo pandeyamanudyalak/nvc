@@ -77,9 +77,12 @@ class UserChangePasswordView(APIView):
 class CreateTicket(APIView):
   renderer_classes = [UserRenderer]
   def post(self,request,*args,**kwargs):
-    serializer = TicketSerializer(data=request.data)
+    file = request.FILES.getlist('attach_file')
+    print('==========File',file)
+    serializer = TicketSerializer(data=request.data,context={'file':file})
+    
     if serializer.is_valid():
-      print(serializer)
+      print('-------------------_Serializewwr',serializer)
       serializer.save()
       return Response({'msg':'Ticket created successfully.'}, status=status.HTTP_201_CREATED)
     return Response({'msg':'Something wents wrong.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -89,6 +92,7 @@ class AllTickets(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated,]
   def get(self,request):
+    print('++++++++++++++',serializer.data.get['attach_file'])
    
     ticket_data = TicketModel.objects.all()
     serializer = TicketSerializer(ticket_data,many=True)
