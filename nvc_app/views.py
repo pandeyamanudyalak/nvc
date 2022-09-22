@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 from .renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from .models import User
+from .models import TicketModel, User
 from django.contrib.auth.hashers import make_password
 
 
@@ -78,7 +78,6 @@ class CreateTicket(APIView):
   renderer_classes = [UserRenderer]
   def post(self,request,*args,**kwargs):
     serializer = TicketSerializer(data=request.data)
-    
     if serializer.is_valid():
       print(serializer)
       serializer.save()
@@ -86,13 +85,33 @@ class CreateTicket(APIView):
     return Response({'msg':'Something wents wrong.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class UserProfile(APIView):
-#   renderer_classes = [UserRenderer]
-#   permission_classes = [IsAuthenticated,]
-#   def get(self,request):
-#     user = request.user
-#     user_details = User.objects.get(email=user)
-#     serializer = UserRegistrationSerializer(user_details)
-#     print(serializer)
+class AllTickets(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated,]
+  def get(self,request):
+   
+    ticket_data = TicketModel.objects.all()
+    serializer = TicketSerializer(ticket_data,many=True)
+    return Response(serializer.data)
+
+
+class OnCallView(APIView):
+  def get(self,request):
+    on_call_tickets = TicketModel.objects.filter(on_call_ticket=True)
+    serializer = TicketSerializer(on_call_tickets,many=True)
+    return Response(serializer.data)
+
+class ClosedTicketView(APIView):
+  def get(self,request):
+    closed_tickets = TicketModel.objects.filter(closed_ticket=True)
+    serializer = TicketSerializer(closed_tickets,many=True)
+    return Response(serializer.data)
+
+class VisitAndClosedView(APIView):
+  def get(self,request):
+    visit_and_closed_tickets = TicketModel.objects.filter(visit_and_closed=True)
+    serializer = TicketSerializer(visit_and_closed_tickets,many=True)
+    return Response(serializer.data)
+  
     
   

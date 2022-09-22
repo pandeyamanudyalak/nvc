@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
@@ -52,6 +53,8 @@ class User(AbstractBaseUser):
   is_admin = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
+
+  
 
   objects = UserManager()
 
@@ -157,6 +160,9 @@ class TicketModel(models.Model):
     visit_and_closed = models.BooleanField(default=False)
     visit_scheduled = models.BooleanField(default=False)
     waiting_for_spares = models.BooleanField(default=False)
+
+    #Group
+   
 
 
     def __str__(self):

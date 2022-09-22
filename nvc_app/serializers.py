@@ -115,7 +115,8 @@ class UserPasswordResetSerializer(serializers.Serializer):
 class TicketSerializer(serializers.ModelSerializer):
   class Meta:
     model = TicketModel
-    fields = ('query_type','ticket_creator_name','ticket_email','ticket_creator_address','equipment_name','equipment_sr_no','equipment_model_no','problem_description','production_temprorary_running','running_with_rejection','production_breakdown','sales_production_name','process_mc_type','max_kg_or_hrs','material_denticty','virgin','regrind','falkes','master_batch','additives_1','additives_2','work_order_no','packing_slip_no','receive_in_good_condition','equipment_description','production_trial_readliness_date','pending','ready','during_engg_visit','not_understood_list','further_tech_guidence_needed','spare_name','spare_sr_no','spare_model_name','part_name','part_description','part_quantity','closed_ticket','on_call_ticket','visit_and_closed','visit_scheduled','waiting_for_spares')
+    fields = '__all__'
+    # fields = ('query_type','ticket_creator_name','ticket_email','ticket_creator_address','equipment_name','equipment_sr_no','equipment_model_no','problem_description','production_temprorary_running','running_with_rejection','production_breakdown','sales_production_name','process_mc_type','max_kg_or_hrs','material_denticty','virgin','regrind','falkes','master_batch','additives_1','additives_2','work_order_no','packing_slip_no','receive_in_good_condition','equipment_description','production_trial_readliness_date','pending','ready','during_engg_visit','not_understood_list','further_tech_guidence_needed','spare_name','spare_sr_no','spare_model_name','part_name','part_description','part_quantity','closed_ticket','on_call_ticket','visit_and_closed','visit_scheduled','waiting_for_spares')
 
  
 

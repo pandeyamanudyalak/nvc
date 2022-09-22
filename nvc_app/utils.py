@@ -4,7 +4,6 @@ import os
 class Util:
   @staticmethod
   def send_email(data):
-    print('------------Utils data',data['to_email'])
     email = EmailMessage(
       subject=data['subject'],
       body=data['body'],
