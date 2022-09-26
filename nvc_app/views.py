@@ -29,14 +29,9 @@ class UserRegistrationView(APIView):
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    # email = serializer.data.get('email')
-    # group = Group.objects.get_or_create(name='Engnieer')
-    # user = User.objects.get(email=email)
-    
-   
-    
+       
     #token = get_tokens_for_user(user)
-    return Response({ 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
+    return Response({ 'msg':'Registration Successful',"status":status.HTTP_201_CREATED})
 
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
@@ -73,14 +68,14 @@ class EmailPasswordResetView(APIView):
     if serializer.is_valid():
       print(serializer.data)
       email = serializer.data.get('email')
-      return Response({'msg':'Password Reset link send. Please check your Email'}, status=status.HTTP_200_OK)
+      return Response({"msg":'Password Reset link send. Please check your Email',"status":status.HTTP_200_OK})
 
 class ResetPasswordView(APIView):
   renderer_classes = [UserRenderer]
   def post(self,request,*args,uid,token,**kwargs):
     serializer = UserPasswordResetSerializer(data = request.data,context={"uid":uid,"token":token})
     serializer.is_valid(raise_exception=True)
-    return Response({'msg':'Password Reset Done'}, status=status.HTTP_200_OK)
+    return Response({'msg':'Password Reset Done', "status":status.HTTP_200_OK})
 
 
 
@@ -90,7 +85,7 @@ class UserChangePasswordView(APIView):
   def post(self,request,*args,format=None,**kwargs):
     serializer = UserChangePasswordSerializer(data=request.data,context={"user":request.user})
     serializer.is_valid(raise_exception=True)
-    return Response({'msg':'Your password changed successfully.'}, status=status.HTTP_200_OK)
+    return Response({'msg':'Your password changed successfully.', "status":status.HTTP_200_OK})
 
 
 class CreateTicket(APIView):
@@ -105,7 +100,7 @@ class CreateTicket(APIView):
       
       serializer.save()
       
-      return Response({'msg':'Ticket created successfully.'}, status=status.HTTP_201_CREATED)
+      return Response({'msg':'Ticket created successfully.', "status":status.HTTP_201_CREATED})
     return Response({'msg':'Something wents wrong.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
