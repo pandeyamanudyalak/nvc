@@ -7,6 +7,7 @@ from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from .utils import Util
+from .models import Photo
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
   # We are writing this becoz we need confirm password field in our Registratin Request
@@ -113,19 +114,12 @@ class UserPasswordResetSerializer(serializers.Serializer):
       raise serializers.ValidationError('Token is not Valid or Expired')
 
 
-class TicketSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = TicketModel
-    fields = '__all__'
+# class TicketSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = TicketModel
+#     fields = '__all__'
 
-  # def validate_attach_file(self, attrs):
-  #   file = list(self.context.get('file'))
-  #   file_list=[]
-  #   for f in file:
-  #     file_list.append(file_list)
-
-  #   return attrs
-  
+ 
     
 
     
@@ -145,5 +139,36 @@ class TicketSerializer(serializers.ModelSerializer):
  
 
  
+class FileListSerializer ( serializers.Serializer ) :
+    image = serializers.ListField(
+                       child=serializers.FileField( max_length=100000,
+                                         allow_empty_file=False,
+                                         use_url=False )
+                                )
+    print('----------------Image----------',image)
+   
+
+class TicketSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = TicketModel
+    fields = '__all__'
+
+  def create(self, validated_data):
+      
+        
+    image=validated_data.pop('attach_file')
+    for img in image:
+        photo=TicketModel.objects.create(attach_file=img,**validated_data)
+        print('--------------------Photo----------------',photo)
+    return photo
+  
 
   
+
+  # def create(self, validated_data):
+        
+  #       image=validated_data.pop('attach_file')
+  #       for img in image:
+  #           photo=TicketModel.objects.create(image=img,**validated_data)
+  #           print('--------------------Photo----------------',photo)
+  #       return photo

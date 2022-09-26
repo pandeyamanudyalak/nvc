@@ -18,7 +18,7 @@ class UserModelAdmin(BaseUserAdmin):
   add_fieldsets = (
       (None, {
           'classes': ('wide',),
-          'fields': ('email', 'user_name', 'user_company_name','user_city','user_zip_code', 'password1', 'password2'),
+          'fields': ('email', 'user_name', 'user_company_name','user_city','user_zip_code', 'password1', 'password2','is_admin'),
       }),
   )
   search_fields = ('email',)
@@ -29,3 +29,6 @@ class UserModelAdmin(BaseUserAdmin):
 # Now register the new UserModelAdmin...
 admin.site.register(User, UserModelAdmin)
 admin.site.register(TicketModel)
+
+from .models import Photo
+admin.site.register(Photo)

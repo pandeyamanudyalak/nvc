@@ -1,7 +1,9 @@
+from tokenize import group
 from django.contrib.auth.models import Group
 from pyexpat import model
 from django.db import models
-from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager,AbstractBaseUser ,PermissionsMixin
+
 
 
 #  Custom User Manager
@@ -22,6 +24,12 @@ class UserManager(BaseUserManager):
 
       user.set_password(password)
       user.save(using=self._db)
+      group , created = Group.objects.get_or_create(name='Engineer')
+      print('-----------------Group-------------',group)
+      #group.user_set.add(user)
+      res = user.groups.add(group)
+      
+      print('--------------------------Res',res)
       return user
 
   def create_superuser(self, email,  user_name,user_city,user_zip_code,user_company_name,  password=None):
@@ -37,12 +45,13 @@ class UserManager(BaseUserManager):
       )
       user.is_active = True
       user.is_admin = True
-      user.is_staff = True
+      #user.is_staff = True
       user.save(using=self._db)
+     
       return user
 
 #  Custom User Model
-class User(AbstractBaseUser):
+class User(AbstractBaseUser , PermissionsMixin ):
   email = models.EmailField(
       verbose_name='Email',
       max_length=255,
@@ -179,12 +188,10 @@ class TicketModel(models.Model):
     status_of_ticket = models.CharField(choices=ticket_status,max_length=200)
     priorty = models.IntegerField(null=True,blank=True)
     attach_file = models.FileField(upload_to='attachments')
-
+    
 
 
     #Group
-   
-
 
     def __str__(self):
         return str(self.ticket_creator_name)
@@ -194,3 +201,6 @@ class TicketModel(models.Model):
 
 
 
+class Photo(models.Model):
+  
+    image = models.FileField(upload_to='attachments')

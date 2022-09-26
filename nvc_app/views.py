@@ -1,4 +1,7 @@
+import email
+from django.contrib.auth.models import Group
 from multiprocessing import context
+from tokenize import group
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -25,7 +28,13 @@ class UserRegistrationView(APIView):
   def post(self, request, format=None):
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    user = serializer.save()
+    serializer.save()
+    # email = serializer.data.get('email')
+    # group = Group.objects.get_or_create(name='Engnieer')
+    # user = User.objects.get(email=email)
+    
+   
+    
     #token = get_tokens_for_user(user)
     return Response({ 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
 
@@ -39,7 +48,7 @@ class UserLoginView(APIView):
     password = serializer.data.get('password')
     print(password)
     user = authenticate(email=email, password=password)
-    print(user)
+    
     if user is not None:
       token = get_tokens_for_user(user)
       return Response({'token':token, 'msg':'Login Success'}, status=status.HTTP_200_OK)
@@ -81,9 +90,11 @@ class CreateTicket(APIView):
    
     serializer = TicketSerializer(data=request.data,context={'file':file})
     
+    
     if serializer.is_valid():
-      print('-------------------_Serializewwr',serializer)
+      
       serializer.save()
+      
       return Response({'msg':'Ticket created successfully.'}, status=status.HTTP_201_CREATED)
     return Response({'msg':'Something wents wrong.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -92,7 +103,9 @@ class AllTickets(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated,]
   def get(self,request):
-    print('++++++++++++++',serializer.data.get['attach_file'])
+    p = request.user.get_group_permissions()
+    print('-----------0ppppppp----------0',p)
+    #print('++++++++++++++',serializer.data.get['attach_file'])
    
     ticket_data = TicketModel.objects.all()
     serializer = TicketSerializer(ticket_data,many=True)
@@ -117,5 +130,14 @@ class VisitAndClosedView(APIView):
     serializer = TicketSerializer(visit_and_closed_tickets,many=True)
     return Response(serializer.data)
   
-    
+from .serializers import FileListSerializer
+
+from rest_framework.parsers import MultiPartParser, FormParser
+
+from .models import Photo
+from rest_framework import viewsets
   
+class PhotoViewSet(viewsets.ModelViewSet):
+  serializer_class = TicketSerializer
+  parser_classes = (MultiPartParser, FormParser,)
+  queryset=TicketModel.objects.all()
