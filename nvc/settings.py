@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-fr47713oh8&m$jkrlwut&(iq5lxw$p!=vy+glck##b!%j-a=r^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nvccrm.herokuapp.com','127.0.0.1','localhost:3000']
+ALLOWED_HOSTS = ['nvccrm.herokuapp.com','127.0.0.1','localhost:3000',"3054-59-144-124-86.eu.ngrok.io"]
 
 FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
