@@ -54,7 +54,7 @@ class UserLoginView(APIView):
       response = {
         "email": serializer.data.get('email')
       }
-      return Response({'token':token,"user_email":response, 'msg':'Login Success'}, status=status.HTTP_200_OK)
+      return Response({'token':token,"user_details":response, 'msg':'Login Success'}, status=status.HTTP_200_OK)
     else:
       return Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
 
