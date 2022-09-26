@@ -91,12 +91,12 @@ CORS_ALLOW_HEADERS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    " https://nvccrm.herokuapp.com/",
+    "https://nvccrm.herokuapp.com/",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    " https://nvccrm.herokuapp.com/",
+    "https://nvccrm.herokuapp.com/",
 ]
 
 
