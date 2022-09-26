@@ -52,7 +52,13 @@ class UserLoginView(APIView):
     if user is not None:
       token = get_tokens_for_user(user)
       response = {
-        "email": serializer.data.get('email')
+        "email": serializer.data.get('email'),
+        "name":user.user_name,
+        "company_name":user.user_company_name,
+        "user_zip_code":user.user_zip_code,
+        "is_active":user.is_active,
+        "is_admin":user.is_admin
+
       }
       return Response({'token':token,"user_details":response, 'msg':'Login Success'}, status=status.HTTP_200_OK)
     else:
