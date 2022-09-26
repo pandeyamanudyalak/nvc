@@ -63,7 +63,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://sub.example.com",
+    "https://nvccrm.herokuapp.com/",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
 ]
