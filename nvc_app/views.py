@@ -151,3 +151,4 @@ class UserProfile(APIView):
         return Response(serializer.data)
     except:
       return Response({'message':"Something wents wrong"},status=status.HTTP_400_BAD_REQUEST)
+
