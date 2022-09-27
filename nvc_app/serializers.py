@@ -167,5 +167,4 @@ class TicketSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = '__all__'
-      
+    fields = ['email','user_name','user_company_name','user_city','user_zip_code','user_group_name','user_position_name','user_zone_name']
