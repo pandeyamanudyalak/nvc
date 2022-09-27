@@ -139,6 +139,7 @@ class VisitAndClosedView(APIView):
 class UserProfile(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated,]
+  print('==============================Inside user profile')
   def get(self,request,pk=None):
     try:
       if pk!=None:
