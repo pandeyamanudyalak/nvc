@@ -22,6 +22,7 @@ urlpatterns = [
     path('on_call_ticket/',views.OnCallView.as_view(),name='on-call-ticket'),
     path('closed_ticket/',views.ClosedTicketView.as_view(),name='closed_ticket'),
     path('visit_and_closed/',views.VisitAndClosedView.as_view(),name='visit-and-closed'),
+    path('user_profile/<int:pk>/',views.UserProfile.as_view(),name='user-profile'),
   
     #path('file',views.PhotoViewSet.as_view(),name='file')
     #path('user_profile/',views.UserProfile.as_view(),name='user-profile')
