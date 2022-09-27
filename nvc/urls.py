@@ -5,8 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 
-router = DefaultRouter()
-router.register(r'file', views.PhotoViewSet,basename="file")
+
 
 
 
@@ -23,7 +22,7 @@ urlpatterns = [
     path('on_call_ticket/',views.OnCallView.as_view(),name='on-call-ticket'),
     path('closed_ticket/',views.ClosedTicketView.as_view(),name='closed_ticket'),
     path('visit_and_closed/',views.VisitAndClosedView.as_view(),name='visit-and-closed'),
-    path("", include(router.urls)),
+  
     #path('file',views.PhotoViewSet.as_view(),name='file')
     #path('user_profile/',views.UserProfile.as_view(),name='user-profile')
    

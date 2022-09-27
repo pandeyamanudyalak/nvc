@@ -164,11 +164,8 @@ class TicketSerializer(serializers.ModelSerializer):
   
 
   
-
-  # def create(self, validated_data):
-        
-  #       image=validated_data.pop('attach_file')
-  #       for img in image:
-  #           photo=TicketModel.objects.create(image=img,**validated_data)
-  #           print('--------------------Photo----------------',photo)
-  #       return photo
+class UserSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = '__all__'
+      

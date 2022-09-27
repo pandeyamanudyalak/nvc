@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from nvc_app import serializers
-from nvc_app.serializers import SendPasswordResetEmailSerializer, TicketSerializer, UserLoginSerializer, UserRegistrationSerializer , UserPasswordResetSerializer , UserChangePasswordSerializer
+from nvc_app.serializers import SendPasswordResetEmailSerializer, TicketSerializer, UserLoginSerializer, UserRegistrationSerializer , UserPasswordResetSerializer , UserChangePasswordSerializer , UserSerializer
 from django.contrib.auth import authenticate
 from .renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -135,14 +135,11 @@ class VisitAndClosedView(APIView):
     serializer = TicketSerializer(visit_and_closed_tickets,many=True)
     return Response(serializer.data)
   
-from .serializers import FileListSerializer
 
-from rest_framework.parsers import MultiPartParser, FormParser
-
-from .models import Photo
-from rest_framework import viewsets
-  
-class PhotoViewSet(viewsets.ModelViewSet):
-  serializer_class = TicketSerializer
-  parser_classes = (MultiPartParser, FormParser,)
-  queryset=TicketModel.objects.all()
+class UserProfile(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated,]
+  def get(self,request):
+    user = User.objects.filter(id=request.user.id)
+    serializer = UserSerializer(user,many=True)
+    return Response({"data":serializer.data,"status":status.HTTP_200_OK})
