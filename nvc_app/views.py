@@ -139,7 +139,15 @@ class VisitAndClosedView(APIView):
 class UserProfile(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated,]
-  def get(self,request,pk):
-    user = User.objects.filter(id=request.user.id)
-    serializer = UserSerializer(user,many=True)
-    return Response({"data":serializer.data,"status":status.HTTP_200_OK})
+  def get(self,request,pk=None):
+    try:
+      if pk!=None:
+        user = User.objects.filter(id=pk)
+        serializer = UserSerializer(user,many=True)
+        return Response(serializer.data)
+      else:
+        user = User.objects.filter(id=request.user.id)
+        serializer = UserSerializer(user,many=True)
+        return Response(serializer.data)
+    except:
+      return Response({'message':"Something wents wrong"},status=status.HTTP_400_BAD_REQUEST)
